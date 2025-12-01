@@ -1,0 +1,130 @@
+﻿namespace QuikBudget
+{
+    partial class ExpenseControl
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            linkLabel2 = new LinkLabel();
+            lblCompanyName = new Label();
+            pictureBox2 = new PictureBox();
+            lblCategory = new Label();
+            lnkLblDelete = new LinkLabel();
+            lblPrice = new Label();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            SuspendLayout();
+            // 
+            // linkLabel2
+            // 
+            linkLabel2.Location = new Point(0, 0);
+            linkLabel2.Name = "linkLabel2";
+            linkLabel2.Size = new Size(100, 23);
+            linkLabel2.TabIndex = 0;
+            // 
+            // lblCompanyName
+            // 
+            lblCompanyName.AutoSize = true;
+            lblCompanyName.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCompanyName.Location = new Point(97, 5);
+            lblCompanyName.Name = "lblCompanyName";
+            lblCompanyName.Size = new Size(93, 15);
+            lblCompanyName.TabIndex = 6;
+            lblCompanyName.Text = "Company Name";
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Location = new Point(3, 5);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(91, 37);
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.TabIndex = 5;
+            pictureBox2.TabStop = false;
+            // 
+            // lblCategory
+            // 
+            lblCategory.AutoSize = true;
+            lblCategory.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblCategory.Location = new Point(97, 20);
+            lblCategory.Name = "lblCategory";
+            lblCategory.Size = new Size(55, 15);
+            lblCategory.TabIndex = 7;
+            lblCategory.Text = "Category";
+            // 
+            // lnkLblDelete
+            // 
+            lnkLblDelete.Anchor = AnchorStyles.Right;
+            lnkLblDelete.AutoSize = true;
+            lnkLblDelete.LinkColor = Color.Red;
+            lnkLblDelete.Location = new Point(342, 15);
+            lnkLblDelete.Name = "lnkLblDelete";
+            lnkLblDelete.Size = new Size(14, 15);
+            lnkLblDelete.TabIndex = 8;
+            lnkLblDelete.TabStop = true;
+            lnkLblDelete.Text = "X";
+            // 
+            // lblPrice
+            // 
+            lblPrice.Anchor = AnchorStyles.Right;
+            lblPrice.BorderStyle = BorderStyle.FixedSingle;
+            lblPrice.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPrice.Location = new Point(236, 12);
+            lblPrice.Name = "lblPrice";
+            lblPrice.RightToLeft = RightToLeft.Yes;
+            lblPrice.Size = new Size(100, 23);
+            lblPrice.TabIndex = 9;
+            lblPrice.Text = "$0.00";
+            lblPrice.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // ExpenseControl
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(lblPrice);
+            Controls.Add(lnkLblDelete);
+            Controls.Add(lblCategory);
+            Controls.Add(lblCompanyName);
+            Controls.Add(pictureBox2);
+            Name = "ExpenseControl";
+            Size = new Size(372, 46);
+            Load += ExpenseControl_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        #endregion
+
+        private Label label6;
+        private LinkLabel linkLabel2;
+        private Label label7;
+        private Label lblCompanyName;
+        private PictureBox pictureBox2;
+        private Label lblCategory;
+        private LinkLabel lnkLblDelete;
+        private Label lblPrice;
+    }
+}
