@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
             pictureBox1 = new PictureBox();
             label1 = new Label();
@@ -41,12 +42,19 @@
             tabPage2 = new TabPage();
             richTextBox1 = new RichTextBox();
             tabPage3 = new TabPage();
+            pBoxStatus = new PictureBox();
+            btnDownload = new Button();
+            lblUpdateStatus = new Label();
+            btnCheckForUpdates = new Button();
             panel1 = new Panel();
+            timer1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             tabPage2.SuspendLayout();
+            tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pBoxStatus).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -167,6 +175,10 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(pBoxStatus);
+            tabPage3.Controls.Add(btnDownload);
+            tabPage3.Controls.Add(lblUpdateStatus);
+            tabPage3.Controls.Add(btnCheckForUpdates);
             tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
             tabPage3.Padding = new Padding(3);
@@ -174,6 +186,46 @@
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Updates";
             tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // pBoxStatus
+            // 
+            pBoxStatus.Image = Properties.Resources.two_clockwise_circular_rotating_arrows_circle;
+            pBoxStatus.Location = new Point(196, 33);
+            pBoxStatus.Name = "pBoxStatus";
+            pBoxStatus.Size = new Size(40, 40);
+            pBoxStatus.SizeMode = PictureBoxSizeMode.StretchImage;
+            pBoxStatus.TabIndex = 3;
+            pBoxStatus.TabStop = false;
+            // 
+            // btnDownload
+            // 
+            btnDownload.Location = new Point(157, 221);
+            btnDownload.Name = "btnDownload";
+            btnDownload.Size = new Size(118, 23);
+            btnDownload.TabIndex = 2;
+            btnDownload.Text = "Download";
+            btnDownload.UseVisualStyleBackColor = true;
+            // 
+            // lblUpdateStatus
+            // 
+            lblUpdateStatus.Dock = DockStyle.Top;
+            lblUpdateStatus.Location = new Point(3, 3);
+            lblUpdateStatus.Name = "lblUpdateStatus";
+            lblUpdateStatus.Padding = new Padding(0, 80, 0, 0);
+            lblUpdateStatus.Size = new Size(427, 172);
+            lblUpdateStatus.TabIndex = 1;
+            lblUpdateStatus.Text = "Press the \"Check for Updates\" button to launch an update check.";
+            lblUpdateStatus.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnCheckForUpdates
+            // 
+            btnCheckForUpdates.Location = new Point(157, 192);
+            btnCheckForUpdates.Name = "btnCheckForUpdates";
+            btnCheckForUpdates.Size = new Size(118, 23);
+            btnCheckForUpdates.TabIndex = 0;
+            btnCheckForUpdates.Text = "Check for Updates";
+            btnCheckForUpdates.UseVisualStyleBackColor = true;
+            btnCheckForUpdates.Click += btnCheckForUpdates_Click;
             // 
             // panel1
             // 
@@ -184,6 +236,10 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(86, 385);
             panel1.TabIndex = 5;
+            // 
+            // timer1
+            // 
+            timer1.Tick += timer1_Tick;
             // 
             // frmAbout
             // 
@@ -210,6 +266,8 @@
             tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             tabPage2.ResumeLayout(false);
+            tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pBoxStatus).EndInit();
             panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -230,5 +288,10 @@
         private Label label5;
         private Panel panel1;
         private PictureBox pictureBox2;
+        private Button btnCheckForUpdates;
+        private Label lblUpdateStatus;
+        private Button btnDownload;
+        private PictureBox pBoxStatus;
+        private System.Windows.Forms.Timer timer1;
     }
 }

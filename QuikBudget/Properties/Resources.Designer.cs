@@ -63,9 +63,9 @@ namespace QuikBudget.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Capital_One_logo_svg {
+        internal static System.Drawing.Bitmap _checked {
             get {
-                object obj = ResourceManager.GetObject("Capital_One_logo.svg", resourceCulture);
+                object obj = ResourceManager.GetObject("checked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,19 @@ namespace QuikBudget.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Verizon_2024_svg {
+        internal static System.Drawing.Bitmap info {
             get {
-                object obj = ResourceManager.GetObject("Verizon_2024.svg", resourceCulture);
+                object obj = ResourceManager.GetObject("info", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap two_clockwise_circular_rotating_arrows_circle {
+            get {
+                object obj = ResourceManager.GetObject("two-clockwise-circular-rotating-arrows-circle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
