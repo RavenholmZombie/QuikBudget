@@ -9,10 +9,12 @@ namespace QuikBudget
         private string? _currentFilePath;
         private DateTime currentDateTime = DateTime.Today;
         private bool _isDirty;
+        private readonly AppUpdateChecker _updateChecker;
         public frmMain()
         {
             InitializeComponent();
             printDocument1.PrintPage += printDocument1_PrintPage;
+            _updateChecker = new AppUpdateChecker(Application.ProductVersion);
         }
 
         private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
@@ -71,7 +73,8 @@ namespace QuikBudget
                 ExpenseName = name,
                 Category = category,
                 Amount = amount,
-                Width = fLPExpenses.ClientSize.Width - 10 // better sizing
+                Width = 372, // better sizing 372, 46
+                Height = 46
             };
 
             var logo = await LogoDevClient.GetLogoByBrandNameAsync(name, size: 64);
@@ -94,14 +97,64 @@ namespace QuikBudget
             {
                 fLPExpenses.Controls.Remove(card);
                 card.Dispose(); // optional but nice
+                SortExpenseCards();
                 _isDirty = true;
                 RecalculateRemaining();
             }
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private async void frmMain_Load(object sender, EventArgs e)
         {
+            try
+            {
+                await RunUpdateCheckAsync();
+            }
+            catch (Exception ex)
+            {
+                // Swallow the errors.
+            }
+        }
 
+        private void SortExpenseCards()
+        {
+            // Grab all ExpenseControls and sort them by ExpenseName
+            var ordered = fLPExpenses.Controls
+                .OfType<ExpenseControl>()
+                .OrderBy(c => c.ExpenseName, StringComparer.CurrentCultureIgnoreCase)
+                .ToList();
+
+            fLPExpenses.SuspendLayout();
+
+            for (int i = 0; i < ordered.Count; i++)
+            {
+                // Ensure the flow panel’s child order matches our sorted order
+                fLPExpenses.Controls.SetChildIndex(ordered[i], i);
+            }
+
+            fLPExpenses.ResumeLayout();
+        }
+
+
+        private async Task RunUpdateCheckAsync()
+        {
+            await _updateChecker.CheckAsync();
+
+            var current = _updateChecker.CurrentVersion;
+            var remote = _updateChecker.RemoteVersion;
+
+            if (!_updateChecker.IsUpdateAvailable)
+            {
+                // Do nothing
+            }
+            else
+            {
+                if (MessageBox.Show("A newer version of QuikBudget is available. \nDownload Now?", "Update Found", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    var about = new frmAbout();
+                    about.Shown += async (s, args) => await about.TriggerUpdateCheckAsync();
+                    about.ShowDialog(this);
+                }
+            }
         }
 
         private void nudBudget_ValueChanged_1(object sender, EventArgs e)
@@ -126,11 +179,6 @@ namespace QuikBudget
             lblRemainingFunds.ForeColor = remaining < 0 ?
                 System.Drawing.Color.Red :
                 System.Drawing.Color.Black;
-        }
-
-        private void nudBudget_ValueChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -186,6 +234,7 @@ namespace QuikBudget
                 {
                     _currentFilePath = dlg.FileName;
                     LoadBudgetFromFile(_currentFilePath);
+                    SortExpenseCards();
                 }
             }
         }
@@ -219,9 +268,12 @@ namespace QuikBudget
             {
                 foreach (var exp in data.Expenses)
                     AddExpenseCard(exp.ExpenseName, exp.Category, exp.Amount);
+                _isDirty = false;
             }
             _isDirty = false;
             RecalculateRemaining();
+            SortExpenseCards();
+            
         }
 
         private bool ConfirmDiscardUnsavedChanges()
@@ -333,6 +385,11 @@ namespace QuikBudget
             Close();
         }
 
+        public void CloseApplication()
+        {
+            Close();
+        }
+
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -348,6 +405,21 @@ namespace QuikBudget
         {
             frmAbout about = new frmAbout();
             about.ShowDialog(this);
+        }
+
+        private void fLPExpenses_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void sortToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SortExpenseCards();
+        }
+
+        private void fLPExpenses_ControlAdded(object sender, ControlEventArgs e)
+        {
+            SortExpenseCards();
         }
     }
 

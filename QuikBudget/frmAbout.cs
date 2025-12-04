@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace QuikBudget
 {
@@ -49,6 +50,7 @@ namespace QuikBudget
             ControlBox = false;
             pBoxStatus.Image = Properties.Resources.two_clockwise_circular_rotating_arrows_circle;
             timer1.Start();
+            tabControl1.SelectedTab = tabPage3;
 
             try
             {
@@ -57,6 +59,7 @@ namespace QuikBudget
             catch (Exception ex)
             {
                 lblUpdateStatus.Text = "Unable to check for updates.\n" + ex;
+                pBoxStatus.Image = Properties.Resources.warning;
             }
             finally
             {
@@ -103,7 +106,18 @@ namespace QuikBudget
         private async void timer1_Tick(object sender, EventArgs e)
         {
             _delay++;
-            if(_delay > 5) timer1.Stop();await TriggerUpdateCheckAsync();
+            if (_delay > 5) timer1.Stop(); await TriggerUpdateCheckAsync();
+        }
+
+        private void btnDownload_Click(object sender, EventArgs e)
+        {
+            _updateChecker.OpenDownloadPage();
+            Opacity = 0;
+            if (System.Windows.Forms.Application.OpenForms["frmMain"] != null)
+            {
+                frmMain main = Application.OpenForms["frmMain"] as frmMain;
+                main.CloseApplication();
+            }
         }
     }
 }

@@ -36,6 +36,8 @@
             label3 = new Label();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            label6 = new Label();
+            label7 = new Label();
             pictureBox2 = new PictureBox();
             label5 = new Label();
             label4 = new Label();
@@ -110,6 +112,8 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(label6);
+            tabPage1.Controls.Add(label7);
             tabPage1.Controls.Add(pictureBox2);
             tabPage1.Controls.Add(label5);
             tabPage1.Controls.Add(label4);
@@ -120,6 +124,25 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Credits";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(21, 105);
+            label6.Name = "label6";
+            label6.Size = new Size(154, 105);
+            label6.TabIndex = 4;
+            label6.Text = "Company Logos - Logo.dev\r\n\r\nIcons - Flaticon:\r\n    Catalin Fertu\r\n    Gregor Cresnar\r\n    Freepik\r\n    Meaicon";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(20, 85);
+            label7.Name = "label7";
+            label7.Size = new Size(172, 20);
+            label7.TabIndex = 3;
+            label7.Text = "Third-Party Attributions";
             // 
             // pictureBox2
             // 
@@ -205,6 +228,7 @@
             btnDownload.TabIndex = 2;
             btnDownload.Text = "Download";
             btnDownload.UseVisualStyleBackColor = true;
+            btnDownload.Click += btnDownload_Click;
             // 
             // lblUpdateStatus
             // 
@@ -293,5 +317,7 @@
         private Button btnDownload;
         private PictureBox pBoxStatus;
         private System.Windows.Forms.Timer timer1;
+        private Label label6;
+        private Label label7;
     }
 }
