@@ -15,6 +15,27 @@ namespace QuikBudget
             InitializeComponent();
             printDocument1.PrintPage += printDocument1_PrintPage;
             _updateChecker = new AppUpdateChecker(Application.ProductVersion);
+            AutoLoadLastBudget();
+        }
+
+        private void AutoLoadLastBudget()
+        {
+            string path = Properties.Settings.Default.LastBudgetPath;
+
+            if (!string.IsNullOrWhiteSpace(path) && File.Exists(path))
+            {
+                try
+                {
+                    LoadBudgetFromFile(path);
+                    _currentFilePath = path;
+                    // LoadBudgetFromFile already sets _isDirty = false and recalculates
+                }
+                catch
+                {
+                    // If the file is corrupt or incompatible, just ignore it
+                    // (Optional: show a MessageBox if you want to warn the user)
+                }
+            }
         }
 
         private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
@@ -61,12 +82,12 @@ namespace QuikBudget
             {
                 if (dlg.ShowDialog(this) == DialogResult.OK)
                 {
-                    AddExpenseCard(dlg.ExpenseName, dlg.Category, dlg.Amount);
+                    AddExpenseCard(dlg.ExpenseName, dlg.Category, dlg.Amount, dlg.Paid);
                 }
             }
         }
 
-        private async void AddExpenseCard(string name, string category, decimal amount)
+        private async void AddExpenseCard(string name, string category, decimal amount, bool paid)
         {
             var card = new ExpenseControl
             {
@@ -74,7 +95,8 @@ namespace QuikBudget
                 Category = category,
                 Amount = amount,
                 Width = 372, // better sizing 372, 46
-                Height = 46
+                Height = 46,
+                Paid = paid
             };
 
             var logo = await LogoDevClient.GetLogoByBrandNameAsync(name, size: 64);
@@ -194,6 +216,8 @@ namespace QuikBudget
                 {
                     _currentFilePath = dlg.FileName;
                     SaveBudgetToFile(_currentFilePath);
+                    Properties.Settings.Default.LastBudgetPath = dlg.FileName;
+                    Properties.Settings.Default.Save();
                 }
             }
         }
@@ -209,7 +233,8 @@ namespace QuikBudget
                     {
                         ExpenseName = c.ExpenseName,
                         Category = c.Category,
-                        Amount = c.Amount
+                        Amount = c.Amount,
+                        Paid = c.Paid
                     })
                     .ToList()
             };
@@ -235,6 +260,9 @@ namespace QuikBudget
                     _currentFilePath = dlg.FileName;
                     LoadBudgetFromFile(_currentFilePath);
                     SortExpenseCards();
+
+                    Properties.Settings.Default.LastBudgetPath = dlg.FileName;
+                    Properties.Settings.Default.Save();
                 }
             }
         }
@@ -267,13 +295,13 @@ namespace QuikBudget
             if (data.Expenses != null)
             {
                 foreach (var exp in data.Expenses)
-                    AddExpenseCard(exp.ExpenseName, exp.Category, exp.Amount);
+                    AddExpenseCard(exp.ExpenseName, exp.Category, exp.Amount, exp.Paid);
                 _isDirty = false;
             }
             _isDirty = false;
             RecalculateRemaining();
             SortExpenseCards();
-            
+            Text = $"QuikBudget - {Path.GetFileNameWithoutExtension(filePath)}";
         }
 
         private bool ConfirmDiscardUnsavedChanges()
@@ -433,5 +461,7 @@ namespace QuikBudget
         public string ExpenseName { get; set; } = "";
         public string Category { get; set; } = "";
         public decimal Amount { get; set; }
+
+        public bool Paid { get; set; }
     }
 }

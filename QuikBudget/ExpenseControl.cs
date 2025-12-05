@@ -74,6 +74,18 @@ namespace QuikBudget
             }
         }
 
+        [Category("Expense")]
+        [Description("Set Paid")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool Paid
+        {
+            get => cBoxPaid.Checked;
+            set
+            {
+                cBoxPaid.Checked = value;
+            }
+        }
+
         #endregion
 
         #region Remove handling
@@ -93,6 +105,11 @@ namespace QuikBudget
         public override string ToString()
         {
             return $"{ExpenseName} - {Amount:C2}";
+        }
+
+        private void cBoxPaid_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cBoxPaid.Checked) BackColor = Color.ForestGreen; else BackColor = Color.White;
         }
     }
 }

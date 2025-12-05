@@ -13,6 +13,7 @@ namespace QuikBudget
         public string ExpenseName => txtExpenseName.Text.Trim();
         public string Category => cmbCategory.Text.Trim();
         public decimal Amount => nudAmount.Value;
+        public bool Paid => false;
 
         public frmAddExpense()
         {
