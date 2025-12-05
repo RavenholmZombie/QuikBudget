@@ -22,7 +22,10 @@ namespace QuikBudget
             this.Margin = new Padding(4);
             this.BackColor = Color.White;
 
-
+            lblCategory.Click += ExpenseControl_Click;
+            lblCompanyName.Click += ExpenseControl_Click;
+            lblPrice.Click += ExpenseControl_Click;
+            pictureBox2.Click += ExpenseControl_Click;
         }
 
         private void ExpenseControl_Load(object sender, EventArgs e)
