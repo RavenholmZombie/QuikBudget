@@ -32,10 +32,11 @@
             lblCompanyName = new Label();
             pictureBox2 = new PictureBox();
             lblCategory = new Label();
-            lnkLblDelete = new LinkLabel();
             lblPrice = new Label();
             cBoxPaid = new CheckBox();
+            imgBtnClose = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)imgBtnClose).BeginInit();
             SuspendLayout();
             // 
             // linkLabel2
@@ -77,18 +78,6 @@
             lblCategory.TabIndex = 7;
             lblCategory.Text = "Category";
             // 
-            // lnkLblDelete
-            // 
-            lnkLblDelete.Anchor = AnchorStyles.Right;
-            lnkLblDelete.AutoSize = true;
-            lnkLblDelete.LinkColor = Color.Red;
-            lnkLblDelete.Location = new Point(372, 15);
-            lnkLblDelete.Name = "lnkLblDelete";
-            lnkLblDelete.Size = new Size(14, 15);
-            lnkLblDelete.TabIndex = 8;
-            lnkLblDelete.TabStop = true;
-            lnkLblDelete.Text = "X";
-            // 
             // lblPrice
             // 
             lblPrice.Anchor = AnchorStyles.Right;
@@ -117,21 +106,42 @@
             cBoxPaid.UseVisualStyleBackColor = false;
             cBoxPaid.CheckedChanged += cBoxPaid_CheckedChanged;
             // 
+            // imgBtnClose
+            // 
+            imgBtnClose.Anchor = AnchorStyles.Right;
+            imgBtnClose.BackColor = Color.Transparent;
+            imgBtnClose.BackgroundImage = Properties.Resources.delete_norm;
+            imgBtnClose.BackgroundImageLayout = ImageLayout.Stretch;
+            imgBtnClose.Cursor = Cursors.Hand;
+            imgBtnClose.Location = new Point(374, 14);
+            imgBtnClose.Name = "imgBtnClose";
+            imgBtnClose.Size = new Size(20, 20);
+            imgBtnClose.TabIndex = 11;
+            imgBtnClose.TabStop = false;
+            imgBtnClose.Click += imgBtnClose_Click;
+            imgBtnClose.MouseEnter += imgBtnClose_MouseEnter;
+            imgBtnClose.MouseLeave += imgBtnClose_MouseLeave;
+            // 
             // ExpenseControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = Properties.Resources._7751;
+            BackgroundImageLayout = ImageLayout.Stretch;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(imgBtnClose);
             Controls.Add(cBoxPaid);
             Controls.Add(lblPrice);
-            Controls.Add(lnkLblDelete);
             Controls.Add(lblCategory);
             Controls.Add(lblCompanyName);
             Controls.Add(pictureBox2);
+            DoubleBuffered = true;
             Name = "ExpenseControl";
             Size = new Size(402, 46);
             Load += ExpenseControl_Load;
+            Click += ExpenseControl_Click;
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)imgBtnClose).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -144,8 +154,8 @@
         private Label lblCompanyName;
         private PictureBox pictureBox2;
         private Label lblCategory;
-        private LinkLabel lnkLblDelete;
         private Label lblPrice;
         private CheckBox cBoxPaid;
+        private PictureBox imgBtnClose;
     }
 }

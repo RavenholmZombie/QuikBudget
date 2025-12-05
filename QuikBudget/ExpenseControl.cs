@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuikBudget.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,7 +22,7 @@ namespace QuikBudget
             this.Margin = new Padding(4);
             this.BackColor = Color.White;
 
-            lnkLblDelete.LinkClicked += lnkRemove_LinkClicked;
+
         }
 
         private void ExpenseControl_Load(object sender, EventArgs e)
@@ -118,7 +119,61 @@ namespace QuikBudget
 
         private void cBoxPaid_CheckedChanged(object sender, EventArgs e)
         {
-            if (cBoxPaid.Checked) BackColor = Color.ForestGreen; else BackColor = Color.White;
+            if (cBoxPaid.Checked)
+            {
+                // Model back color
+                BackColor = Color.ForestGreen;
+
+                // Label colors
+                cBoxPaid.ForeColor = Color.White;
+                lblPrice.ForeColor = Color.White;
+                lblCategory.ForeColor = Color.White;
+                lblCompanyName.ForeColor = Color.White;
+            }
+            else
+            {
+                // Model back color
+                BackColor = Color.White;
+
+                // Label colors
+                cBoxPaid.ForeColor = Color.Black;
+                lblPrice.ForeColor = Color.Black;
+                lblCategory.ForeColor = Color.Black;
+                lblCompanyName.ForeColor = Color.Black;
+            }
+        }
+
+        private void lnkLblDelete_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
+
+        private void imgBtnClose_MouseEnter(object sender, EventArgs e)
+        {
+            imgBtnClose.BackgroundImage = Resources.delete_hov;
+        }
+
+        private void imgBtnClose_MouseLeave(object sender, EventArgs e)
+        {
+            imgBtnClose.BackgroundImage = Resources.delete_norm;
+        }
+
+        private void imgBtnClose_Click(object sender, EventArgs e)
+        {
+            imgBtnClose.BackgroundImage = Resources.delete_press;
+            OnRemoveRequested();
+        }
+
+        private void ExpenseControl_Click(object sender, EventArgs e)
+        {
+            if(cBoxPaid.Checked)
+            {
+                cBoxPaid.Checked = false;
+            }
+            else
+            {
+                cBoxPaid.Checked = true;
+            }
         }
     }
 }

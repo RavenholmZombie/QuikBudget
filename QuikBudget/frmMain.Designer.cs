@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            label1 = new Label();
+            lblYourBudget = new Label();
             nudBudget = new NumericUpDown();
             lblRemainingFunds = new Label();
             fLPExpenses = new FlowLayoutPanel();
@@ -59,21 +59,21 @@
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // lblYourBudget
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(13, 33);
-            label1.Name = "label1";
-            label1.Size = new Size(81, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Your Budget $";
+            lblYourBudget.AutoSize = true;
+            lblYourBudget.Location = new Point(13, 33);
+            lblYourBudget.Name = "lblYourBudget";
+            lblYourBudget.Size = new Size(75, 15);
+            lblYourBudget.TabIndex = 0;
+            lblYourBudget.Text = "Budget AAA:";
             // 
             // nudBudget
             // 
             nudBudget.Location = new Point(94, 31);
             nudBudget.Maximum = new decimal(new int[] { int.MaxValue, 0, 0, 0 });
             nudBudget.Name = "nudBudget";
-            nudBudget.Size = new Size(323, 23);
+            nudBudget.Size = new Size(322, 23);
             nudBudget.TabIndex = 1;
             nudBudget.ThousandsSeparator = true;
             nudBudget.ValueChanged += nudBudget_ValueChanged_1;
@@ -147,7 +147,7 @@
             newToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             newToolStripMenuItem.Name = "newToolStripMenuItem";
             newToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.N;
-            newToolStripMenuItem.Size = new Size(180, 22);
+            newToolStripMenuItem.Size = new Size(146, 22);
             newToolStripMenuItem.Text = "&New";
             newToolStripMenuItem.Click += newToolStripMenuItem_Click;
             // 
@@ -157,14 +157,14 @@
             openToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             openToolStripMenuItem.Name = "openToolStripMenuItem";
             openToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.O;
-            openToolStripMenuItem.Size = new Size(180, 22);
+            openToolStripMenuItem.Size = new Size(146, 22);
             openToolStripMenuItem.Text = "&Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // toolStripSeparator
             // 
             toolStripSeparator.Name = "toolStripSeparator";
-            toolStripSeparator.Size = new Size(177, 6);
+            toolStripSeparator.Size = new Size(143, 6);
             // 
             // saveToolStripMenuItem
             // 
@@ -172,21 +172,21 @@
             saveToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(180, 22);
+            saveToolStripMenuItem.Size = new Size(146, 22);
             saveToolStripMenuItem.Text = "&Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(180, 22);
+            saveAsToolStripMenuItem.Size = new Size(146, 22);
             saveAsToolStripMenuItem.Text = "Save &As";
             saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(143, 6);
             // 
             // printToolStripMenuItem
             // 
@@ -194,7 +194,7 @@
             printToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             printToolStripMenuItem.Name = "printToolStripMenuItem";
             printToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
-            printToolStripMenuItem.Size = new Size(180, 22);
+            printToolStripMenuItem.Size = new Size(146, 22);
             printToolStripMenuItem.Text = "&Print";
             printToolStripMenuItem.Click += printToolStripMenuItem_Click;
             // 
@@ -203,26 +203,26 @@
             printPreviewToolStripMenuItem.Image = (Image)resources.GetObject("printPreviewToolStripMenuItem.Image");
             printPreviewToolStripMenuItem.ImageTransparentColor = Color.Magenta;
             printPreviewToolStripMenuItem.Name = "printPreviewToolStripMenuItem";
-            printPreviewToolStripMenuItem.Size = new Size(180, 22);
+            printPreviewToolStripMenuItem.Size = new Size(146, 22);
             printPreviewToolStripMenuItem.Text = "Print Pre&view";
             printPreviewToolStripMenuItem.Click += printPreviewToolStripMenuItem_Click;
             // 
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new Size(180, 22);
+            settingsToolStripMenuItem.Size = new Size(146, 22);
             settingsToolStripMenuItem.Text = "Settings";
             settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(143, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(146, 22);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -273,7 +273,7 @@
             Controls.Add(lblRemainingFunds);
             Controls.Add(nudBudget);
             Controls.Add(btnAddItem);
-            Controls.Add(label1);
+            Controls.Add(lblYourBudget);
             Controls.Add(menuStrip1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -294,7 +294,7 @@
 
         #endregion
 
-        private Label label1;
+        private Label lblYourBudget;
         private NumericUpDown nudBudget;
         private Label lblRemainingFunds;
         private FlowLayoutPanel fLPExpenses;

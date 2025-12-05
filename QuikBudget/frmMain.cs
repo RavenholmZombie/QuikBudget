@@ -178,6 +178,7 @@ namespace QuikBudget
             }
 
             string symbol = GetCurrencySymbolFromDisplay(display);
+            lblYourBudget.Text = $"Budget {GetCurrencySymbolFromDisplay(display)}:";
 
             _currencyCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
             _currencyCulture.NumberFormat.CurrencySymbol = symbol;
