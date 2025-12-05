@@ -8,5 +8,11 @@
     <Setting Name="LastBudgetPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="openLastFileOnLaunch" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="currencyNote" Type="System.String" Scope="User">
+      <Value Profile="(Default)">$</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -46,5 +46,29 @@ namespace QuikBudget.Properties {
                 this["LastBudgetPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool openLastFileOnLaunch {
+            get {
+                return ((bool)(this["openLastFileOnLaunch"]));
+            }
+            set {
+                this["openLastFileOnLaunch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("$")]
+        public string currencyNote {
+            get {
+                return ((string)(this["currencyNote"]));
+            }
+            set {
+                this["currencyNote"] = value;
+            }
+        }
     }
 }

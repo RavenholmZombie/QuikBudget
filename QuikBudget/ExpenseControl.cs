@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 
@@ -11,6 +12,8 @@ namespace QuikBudget
     public partial class ExpenseControl : UserControl
     {
         private decimal _amount;
+
+        public static CultureInfo CurrencyCulture { get; set; } = CultureInfo.CurrentCulture;
         public ExpenseControl()
         {
             InitializeComponent();
@@ -24,6 +27,12 @@ namespace QuikBudget
         private void ExpenseControl_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public void RefreshFormatting()
+        {
+            // Re-apply the current culture to the amount label
+            lblPrice.Text = _amount.ToString("C2", CurrencyCulture);
         }
 
         public event EventHandler RemoveRequested;
@@ -57,7 +66,7 @@ namespace QuikBudget
             set
             {
                 _amount = value;
-                lblPrice.Text = _amount.ToString("C2"); // e.g. $185.59
+                lblPrice.Text = _amount.ToString("C2", CurrencyCulture);
             }
         }
 

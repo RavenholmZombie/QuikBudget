@@ -1,4 +1,5 @@
 ﻿using System.Drawing.Printing;
+using System.Globalization;
 using System.Text.Json;
 using System.Windows.Forms;
 
@@ -6,6 +7,7 @@ namespace QuikBudget
 {
     public partial class frmMain : Form
     {
+        private CultureInfo _currencyCulture;
         private string? _currentFilePath;
         private DateTime currentDateTime = DateTime.Today;
         private bool _isDirty;
@@ -15,7 +17,9 @@ namespace QuikBudget
             InitializeComponent();
             printDocument1.PrintPage += printDocument1_PrintPage;
             _updateChecker = new AppUpdateChecker(Application.ProductVersion);
-            AutoLoadLastBudget();
+            InitCurrencyCultureFromSettings();
+
+            if (Properties.Settings.Default.openLastFileOnLaunch) AutoLoadLastBudget();
         }
 
         private void AutoLoadLastBudget()
@@ -28,7 +32,7 @@ namespace QuikBudget
                 {
                     LoadBudgetFromFile(path);
                     _currentFilePath = path;
-                    // LoadBudgetFromFile already sets _isDirty = false and recalculates
+                    _isDirty = false;
                 }
                 catch
                 {
@@ -48,7 +52,7 @@ namespace QuikBudget
             e.Graphics.DrawString(title, headerFont, Brushes.Black, e.MarginBounds.Left, y);
             y += headerFont.GetHeight(e.Graphics) + 10;
 
-            string budgetLine = $"Budget: {nudBudget.Value:C2}";
+            string budgetLine = $"Budget: {nudBudget.Value.ToString("C2", _currencyCulture)}";
             string remainingLine = lblRemainingFunds.Text;
 
             e.Graphics.DrawString(budgetLine, normalFont, Brushes.Black, e.MarginBounds.Left, y);
@@ -61,7 +65,8 @@ namespace QuikBudget
 
             foreach (var card in fLPExpenses.Controls.OfType<ExpenseControl>())
             {
-                string line = $"{card.ExpenseName} ({card.Category}) - {card.Amount:C2}";
+                string amountText = card.Amount.ToString("C2", _currencyCulture);
+                string line = $"{card.ExpenseName} ({card.Category}) - {amountText}";
                 e.Graphics.DrawString(line, normalFont, Brushes.Black,
                     e.MarginBounds.Left + 20, y);
                 y += normalFont.GetHeight(e.Graphics) + 2;
@@ -137,6 +142,64 @@ namespace QuikBudget
             }
         }
 
+        private static string GetCurrencySymbolFromDisplay(string display)
+        {
+            if (string.IsNullOrWhiteSpace(display))
+                return "$"; // fallback
+
+            // Find the last (...) block
+            int open = display.LastIndexOf('(');
+            int close = display.LastIndexOf(')');
+
+            if (open < 0 || close < 0 || close <= open + 1)
+                return "$"; // can't parse, fallback
+
+            // Text inside the parentheses
+            string inside = display.Substring(open + 1, close - open - 1).Trim();
+            // e.g. "USD $", "KHR", "¥"
+
+            if (string.IsNullOrWhiteSpace(inside))
+                return "$";
+
+            // If there are multiple tokens, use the last one
+            // "USD $" -> "$"
+            // "KHR"   -> "KHR"
+            var parts = inside.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            return parts.Length > 1 ? parts[^1] : parts[0];
+        }
+
+        private void InitCurrencyCultureFromSettings()
+        {
+            string display = Properties.Settings.Default.currencyNote;
+            if (string.IsNullOrWhiteSpace(display))
+            {
+                // default to USD if no setting yet
+                display = "United States Dollar (USD $)";
+            }
+
+            string symbol = GetCurrencySymbolFromDisplay(display);
+
+            _currencyCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            _currencyCulture.NumberFormat.CurrencySymbol = symbol;
+
+            ExpenseControl.CurrencyCulture = _currencyCulture;
+        }
+
+        private void ApplyCurrencySettings()
+        {
+            // Rebuild culture from Settings and push into ExpenseControl
+            InitCurrencyCultureFromSettings();
+
+            // Re-format every existing card
+            foreach (var card in fLPExpenses.Controls.OfType<ExpenseControl>())
+            {
+                card.RefreshFormatting();
+            }
+
+            // Update Remaining Funds label with new symbol
+            RecalculateRemaining();
+        }
+
         private void SortExpenseCards()
         {
             // Grab all ExpenseControls and sort them by ExpenseName
@@ -195,7 +258,7 @@ namespace QuikBudget
 
             decimal remaining = budget - totalExpenses;
 
-            lblRemainingFunds.Text = $"Remaining Funds: {remaining:C2}";
+            lblRemainingFunds.Text = $"Remaining Funds: {remaining.ToString("C2", _currencyCulture)}";
 
             // Optional color change if negative
             lblRemainingFunds.ForeColor = remaining < 0 ?
@@ -448,6 +511,23 @@ namespace QuikBudget
         private void fLPExpenses_ControlAdded(object sender, ControlEventArgs e)
         {
             SortExpenseCards();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new frmSettings())
+            {
+                if (dlg.ShowDialog(this) == DialogResult.OK)
+                {
+                    // User saved settings → apply them immediately
+                    ApplyCurrencySettings();
+                }
+            }
+        }
+
+        private void lblRemainingFunds_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
